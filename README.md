@@ -1,5 +1,4 @@
 # Trackonio
-===========
 
 This tool lets you automatically track working time to your personio Attendance table.
 

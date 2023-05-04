@@ -11,16 +11,16 @@ from random import randint
 
 import requests
 
-EMAIL = os.environ.get('PERSONIO_USERNAME')
-PASSWORD = os.environ.get('PERSONIO_PASSWORD')
-PROFILE_ID = os.environ.get('PROFILE_ID')
-CALENDAR_ID = os.environ.get('CALENDAR_ID', '59097')
-STARTING_HOUR = os.environ.get('WORK_START_TIME', '08')
-BREAK_HOUR = os.environ.get('BREAK_START_TIME', '13')
-WORKING_HOURS = os.environ.get('WORK_DURATION', 8)
-BREAK_TIME_MINUTES = os.environ.get('BREAK_DURATION', 60)
-RANDOM_TIMES_DELTA = os.environ.get('RANDOM_TIMES_DELTA', 0)
-RANDOM_DURATIONS_DELTA = os.environ.get('RANDOM_TIMES_DELTA', 0)
+EMAIL = str(os.environ.get('PERSONIO_USERNAME'))
+PASSWORD = str(os.environ.get('PERSONIO_PASSWORD'))
+PROFILE_ID = str(os.environ.get('PROFILE_ID'))
+CALENDAR_ID = str(os.environ.get('CALENDAR_ID', '59097'))
+STARTING_HOUR = str(os.environ.get('WORK_START_TIME', '08'))
+BREAK_HOUR = str(os.environ.get('BREAK_START_TIME', '13'))
+WORKING_HOURS = int(os.environ.get('WORK_DURATION', 8))
+BREAK_TIME_MINUTES = int(os.environ.get('BREAK_DURATION', 60))
+RANDOM_TIMES_DELTA = int(os.environ.get('RANDOM_TIMES_DELTA', 0))
+RANDOM_DURATIONS_DELTA = int(os.environ.get('RANDOM_TIMES_DELTA', 0))
 
 LOGIN_URL = "https://trackonio2.personio.de/login/index"
 ATTENDANCE_URL = f'https://trackonio2.personio.de/api/v1/attendances/periods'

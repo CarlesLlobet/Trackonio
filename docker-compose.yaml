@@ -1,0 +1,25 @@
+version: "3"
+
+services:
+  trackonio:
+    container_name: trackonio
+    build: 
+      context: .
+      args:
+        CRON_HOUR: ${CRON_HOUR:-9}
+        CRON_MINUTE: ${CRON_MINUTE:-0}
+    restart: always
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+    environment:
+      - PERSONIO_USERNAME=${PERSONIO_USERNAME} # name.surname@company.com
+      - PERSONIO_PASSWORD=${PERSONIO_PASSWORD}
+      - PROFILE_ID=${PROFILE_ID} # This can be found in your personio profile URL
+      # TODO: Query Calendar ID when API v2 is released with this feature: https://developer.personio.de/discuss/61d860f5f3dd510347146908
+      - CALENDAR_ID=${CALENDAR_ID:-59097} #Barcelona:59097 & Madrid:8868
+      - WORK_START_TIME=${WORK_START_TIME:-08} # 24h format [00-23]. Double digit with 0 padding if neccessary!
+      - WORK_DURATION=${WORK_DURATION:-8} # In Hours
+      - BREAK_START_TIME=${BREAK_START_TIME:-13} # 24h format [00-23]. Double digit with 0 padding if neccessary!
+      - BREAK_DURATION=${BREAK_DURATION:-60} # In Minutes
+      - RANDOM_TIMES_DELTA=${RANDOM_TIMES_DELTA:-0} # Number of random +/- minutes of start time
+      - RANDOM_DURATIONS_DELTA=${RANDOM_DURATIONS_DELTA:-0} # Number of random +/- minutes of durations

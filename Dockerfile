@@ -11,7 +11,10 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY trackonio.py .
 
-RUN echo "${CRON_MINUTE:-0} ${CRON_HOUR:-9} * * * root python /app/trackonio.py $(date +%Y-%m-%d)" > /etc/cron.d/script-cron && \
+ARG CRON_HOUR
+ARG CRON_MINUTE
+
+RUN echo "${CRON_MINUTE:-0} ${CRON_HOUR:-9} * * * root python -u /app/trackonio.py $(date +%Y-%m-%d) > /dev/stdout" > /etc/cron.d/script-cron && \
     chmod 0644 /etc/cron.d/script-cron && \
     crontab /etc/cron.d/script-cron
 

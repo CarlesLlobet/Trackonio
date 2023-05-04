@@ -11,8 +11,10 @@ from random import randint
 
 import requests
 
+MAIN_URL = "https://"+str(os.environ.get('PERSONIO_HOST',"personio.personio.de"))
 EMAIL = str(os.environ.get('PERSONIO_USERNAME'))
 PASSWORD = str(os.environ.get('PERSONIO_PASSWORD'))
+COOKIE = str(os.environ.get('PERSONIO_COOKIE'))
 CALENDAR_ID = str(os.environ.get('CALENDAR_ID', '59097'))
 STARTING_HOUR = str(os.environ.get('WORK_START_TIME', '08'))
 BREAK_HOUR = str(os.environ.get('BREAK_START_TIME', '13'))
@@ -21,10 +23,10 @@ BREAK_TIME_MINUTES = int(os.environ.get('BREAK_DURATION', 60))
 RANDOM_TIMES_DELTA = int(os.environ.get('RANDOM_TIMES_DELTA', 0))
 RANDOM_DURATIONS_DELTA = int(os.environ.get('RANDOM_TIMES_DELTA', 0))
 
-LOGIN_URL = "https://trackonio2.personio.de/login/index"
-ATTENDANCE_URL = f'https://trackonio2.personio.de/api/v1/attendances/periods'
-HOLIDAYS_URL = f'https://trackonio2.personio.de/api/v1/holidays?holiday_calendar_ids[]=' 
-ABSENCES_URL = f'https://trackonio2.personio.de/api/v1/employees'
+LOGIN_URL = f'{MAIN_URL}/login/index'
+ATTENDANCE_URL = f'{MAIN_URL}/api/v1/attendances/periods'
+HOLIDAYS_URL = f'{MAIN_URL}/api/v1/holidays?holiday_calendar_ids[]=' 
+ABSENCES_URL = f'{MAIN_URL}/api/v1/employees'
 
 def check_date(dateInput):
     return re.fullmatch(r"\A([\d]{4})-([\d]{2})-([\d]{2})", dateInput)
@@ -92,11 +94,16 @@ if __name__ == "__main__":
     session = requests.Session()
 
     # Login into Personio
-    response = session.post(
-        LOGIN_URL,
-        headers={"Content-Type": "application/x-www-form-urlencoded"},
-        data={"email": EMAIL, "password": PASSWORD},
-    )
+    if COOKIE != 'None':
+        session.cookies.set('personio_session', COOKIE)
+        response = session.get(MAIN_URL)
+    elif EMAIL != 'None' and PASSWORD != 'None':
+        response = session.post(
+            LOGIN_URL,
+            headers={"Content-Type": "application/x-www-form-urlencoded"},
+            data={"email": EMAIL, "password": PASSWORD},
+        )
+
     if 'XSRF-TOKEN' in response.cookies:
         XSRF_TOKEN=response.cookies['XSRF-TOKEN']
         PROFILE_ID=response.text.split("EMPLOYEE={id:")[1].split("}")[0]

@@ -6,14 +6,16 @@ services:
     build: 
       context: .
       args:
-        CRON_HOUR: ${CRON_HOUR:-9}
-        CRON_MINUTE: ${CRON_MINUTE:-0}
+        CRON_HOUR: ${CRON_HOUR:-10}
+        CRON_MINUTE: ${CRON_MINUTE:-56}
     restart: always
     volumes:
       - /etc/localtime:/etc/localtime:ro
     environment:
+      - PERSONIO_HOST=${PERSONIO_HOST:-personio.personio.de} # company.personio.de
       - PERSONIO_USERNAME=${PERSONIO_USERNAME} # name.surname@company.com
       - PERSONIO_PASSWORD=${PERSONIO_PASSWORD}
+      - PERSONIO_COOKIE=${PERSONIO_COOKIE}
       # TODO: Query Calendar ID when API v2 is released with this feature: https://developer.personio.de/discuss/61d860f5f3dd510347146908
       - CALENDAR_ID=${CALENDAR_ID:-59097} #Barcelona:59097 & Madrid:8868
       - WORK_START_TIME=${WORK_START_TIME:-08} # 24h format [00-23]. Double digit with 0 padding if neccessary!

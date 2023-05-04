@@ -38,7 +38,7 @@ Here are the different variables you can modify:
 #### Automatic tracking
 To start using this solution after configuring it at your disguise, you just have to execute:
 
-````
+```
 $ docker-compose up -d
 ```
 

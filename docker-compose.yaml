@@ -6,8 +6,8 @@ services:
     build: 
       context: .
       args:
-        CRON_HOUR: ${CRON_HOUR:-10}
-        CRON_MINUTE: ${CRON_MINUTE:-56}
+        CRON_HOUR: ${CRON_HOUR:-9}
+        CRON_MINUTE: ${CRON_MINUTE:-0}
     restart: always
     volumes:
       - /etc/localtime:/etc/localtime:ro

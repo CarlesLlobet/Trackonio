@@ -89,7 +89,7 @@ if __name__ == "__main__":
         exit()
 
     attendanceDate = sys.argv[1]
-
+    
     # Create request session
     session = requests.Session()
 

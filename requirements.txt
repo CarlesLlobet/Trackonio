@@ -1,0 +1,4 @@
+requests
+#TODO: Google authentication
+#google-auth 
+#google-auth-oauthlib

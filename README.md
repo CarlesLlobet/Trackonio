@@ -30,6 +30,7 @@ The default configuration will create everyday at 9:00 AM a track record of that
 
 #### Automatic tracking
 To start using this solution after configuring it at your disguise, you just have to execute:
+
 `$ docker-compose up -d`
 
 #### Manual tracking

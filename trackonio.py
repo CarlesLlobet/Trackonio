@@ -13,7 +13,6 @@ import requests
 
 EMAIL = str(os.environ.get('PERSONIO_USERNAME'))
 PASSWORD = str(os.environ.get('PERSONIO_PASSWORD'))
-PROFILE_ID = str(os.environ.get('PROFILE_ID'))
 CALENDAR_ID = str(os.environ.get('CALENDAR_ID', '59097'))
 STARTING_HOUR = str(os.environ.get('WORK_START_TIME', '08'))
 BREAK_HOUR = str(os.environ.get('BREAK_START_TIME', '13'))
@@ -100,6 +99,7 @@ if __name__ == "__main__":
     )
     if 'XSRF-TOKEN' in response.cookies:
         XSRF_TOKEN=response.cookies['XSRF-TOKEN']
+        PROFILE_ID=response.text.split("EMPLOYEE={id:")[1].split("}")[0]
     else:
         print("Failed to login")
         exit()

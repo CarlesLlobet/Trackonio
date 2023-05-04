@@ -11,34 +11,21 @@ from random import randint
 
 import requests
 
-try:
-    from config import (
-        EMAIL,
-        PASSWORD,
-        PROFILE_ID,
-        CALENDAR_ID,
-        STARTING_HOUR,
-        BREAK_HOUR,
-        WORKING_HOURS,
-        BREAK_TIME_MINUTES,
-        LOGIN_URL,
-        ATTENDANCE_URL,
-        HOLIDAYS_URL, 
-        ABSENCES_URL,
-        RANDOM_TIMES_DELTA,
-        RANDOM_DURATIONS_DELTA
-    )
+EMAIL = os.environ.get('PERSONIO_USERNAME')
+PASSWORD = os.environ.get('PERSONIO_PASSWORD')
+PROFILE_ID = os.environ.get('PROFILE_ID')
+CALENDAR_ID = os.environ.get('CALENDAR_ID', '59097')
+STARTING_HOUR = os.environ.get('WORK_START_TIME', '08')
+BREAK_HOUR = os.environ.get('BREAK_START_TIME', '13')
+WORKING_HOURS = os.environ.get('WORK_DURATION', 8)
+BREAK_TIME_MINUTES = os.environ.get('BREAK_DURATION', 60)
+RANDOM_TIMES_DELTA = os.environ.get('RANDOM_TIMES_DELTA', 0)
+RANDOM_DURATIONS_DELTA = os.environ.get('RANDOM_TIMES_DELTA', 0)
 
-except ImportError:
-    print("WARNING: no config.py found. Please RTFM!")
-    exit()
-
-def _extract_csrf_token(self, html):
-        pattern = re.compile(r'name="_csrf_token" value="(\w+)"')
-        match = pattern.search(html)
-        if match is None:
-            return None
-        return match.group(1)
+LOGIN_URL = "https://trackonio2.personio.de/login/index"
+ATTENDANCE_URL = f'https://trackonio2.personio.de/api/v1/attendances/periods'
+HOLIDAYS_URL = f'https://trackonio2.personio.de/api/v1/holidays?holiday_calendar_ids[]=' 
+ABSENCES_URL = f'https://trackonio2.personio.de/api/v1/employees'
 
 def check_date(dateInput):
     return re.fullmatch(r"\A([\d]{4})-([\d]{2})-([\d]{2})", dateInput)
@@ -47,8 +34,8 @@ def check_date(dateInput):
 def generate_attendance(
     date, startingHour, breakHour, workingHours, breakDuration, employeeId, randomTimes, randomDurations):
     # First Record
-    startTime = datetime.strptime(f"{date} {startingHour}", "%Y-%m-%d %H:%M")
-    breakTime = datetime.strptime(f"{date} {breakHour}", "%Y-%m-%d %H:%M")
+    startTime = datetime.strptime(f"{date} {startingHour}", "%Y-%m-%d %H")
+    breakTime = datetime.strptime(f"{date} {breakHour}", "%Y-%m-%d %H")
     workingDuration = (workingHours) * 60
     
     # Randomize input times and durations
@@ -100,7 +87,7 @@ if __name__ == "__main__":
         )
         exit()
 
-    attendance_date = sys.argv[1]
+    attendanceDate = sys.argv[1]
 
     # Create request session
     session = requests.Session()
@@ -111,11 +98,15 @@ if __name__ == "__main__":
         headers={"Content-Type": "application/x-www-form-urlencoded"},
         data={"email": EMAIL, "password": PASSWORD},
     )
-    XSRF_TOKEN=response.cookies['XSRF-TOKEN']
-
+    if 'XSRF-TOKEN' in response.cookies:
+        XSRF_TOKEN=response.cookies['XSRF-TOKEN']
+    else:
+        print("Failed to login")
+        exit()
+    
     # Check Working Day
     response = session.get(
-        f'{HOLIDAYS_URL}{CALENDAR_ID}&start_date={attendance_date}&end_date={attendance_date}'
+        f'{HOLIDAYS_URL}{CALENDAR_ID}&start_date={attendanceDate}&end_date={attendanceDate}'
     )
     isHoliday = len(json.loads(response.text)['data'])
 
@@ -125,7 +116,7 @@ if __name__ == "__main__":
     )
     absenceTypes = ','.join(list(map(lambda a : str(a['id']), json.loads(response.text)['data'])))
     response = session.get(
-        f'{ABSENCES_URL}/{PROFILE_ID}/absences/periods?filter[startDate]={attendance_date}&filter[endDate]={attendance_date}&filter[absenceTypes]={absenceTypes}'
+        f'{ABSENCES_URL}/{PROFILE_ID}/absences/periods?filter[startDate]={attendanceDate}&filter[endDate]={attendanceDate}&filter[absenceTypes]={absenceTypes}'
     )
     isAbsence = len(json.loads(response.text)['data'])
 
@@ -139,7 +130,7 @@ if __name__ == "__main__":
         ATTENDANCE_URL,
         headers={'x-csrf-token':XSRF_TOKEN},
         json=generate_attendance(
-            attendance_date,
+            attendanceDate,
             STARTING_HOUR,
             BREAK_HOUR,
             WORKING_HOURS,
@@ -152,8 +143,8 @@ if __name__ == "__main__":
 
     data = json.loads(response.text)
     try:
-        message = f"Error: {attendance_date} - {data['error']['message']}"
+        message = f"Error: {attendanceDate} - {data['error']['message']}"
     except KeyError:
-        message = f"Success: attendance on {attendance_date} registered!"
+        message = f"Success: attendance on {attendanceDate} registered!"
 
     print(message)

@@ -23,7 +23,7 @@ The default configuration will assume you work for personio.personio.de and crea
 However, you can configure many more variables through the .env file, and Trackonio will take care of the rest.
 Here are the different variables you can modify:
 
-> - PERSONIO_HOST=${PERSONIO_HOST:-personio.personio.de} # company.personio.de
+> - PERSONIO_HOST: The host of your personio instance, usually companyname.personio.de (e.g: acme.personio.de)
 > - PERSONIO_USERNAME: Your Personio username (e.g: name.surname@company.com)
 > - PERSONIO_PASSWORD: Your Personio password (e.g: mySuperStrongPassword!)
 > - PERSONIO_COOKIE: Your Personio session cookie (e.g: eyJpdiI6IkY1TGFieUJUeHc...)

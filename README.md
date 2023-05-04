@@ -3,8 +3,8 @@
 This tool lets you automatically track working time to your personio Attendance table.
 
 ## Requirements
-- Docker
-- Docker-compose
+- [Docker](https://docs.docker.com/get-docker/)
+- [Docker Compose](https://docs.docker.com/get-started/08_using_compose/#install-docker-compose)
 
 ## Getting Started
 ### Configuration

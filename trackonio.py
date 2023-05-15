@@ -95,20 +95,29 @@ if __name__ == "__main__":
 
     # Login into Personio
     if COOKIE != 'None':
-        session.cookies.set('personio_session', COOKIE)
+        if os.path.exists('.session'):
+            with open('.session', 'r') as file:
+                session.cookies.set('personio_session', file.read().strip())
+        else:
+            session.cookies.set('personio_session', COOKIE)
+        print("Authenticating with following Cookie: " + str(session.cookies.get('personio_session')))
         response = session.get(MAIN_URL)
     elif EMAIL != 'None' and PASSWORD != 'None':
+        print("Authenticating with Username/Password: " + EMAIL)
         response = session.post(
             LOGIN_URL,
             headers={"Content-Type": "application/x-www-form-urlencoded"},
             data={"email": EMAIL, "password": PASSWORD},
         )
-
-    if 'XSRF-TOKEN' in response.cookies:
-        XSRF_TOKEN=response.cookies['XSRF-TOKEN']
-        PROFILE_ID=response.text.split("EMPLOYEE={id:")[1].split("}")[0]
+    if 'response' in locals():
+        if 'XSRF-TOKEN' in response.cookies:
+            XSRF_TOKEN=response.cookies['XSRF-TOKEN']
+            PROFILE_ID=response.text.split("EMPLOYEE={id:")[1].split("}")[0]
+        else:
+            print("Failed to login with provided credentials to "+MAIN_URL)
+            exit()
     else:
-        print("Failed to login")
+        print("No auth method provided. Please RTFM!")
         exit()
     
     # Check Working Day
@@ -149,6 +158,11 @@ if __name__ == "__main__":
     )
 
     data = json.loads(response.text)
+    personio_cookie = response.cookies.get('personio_session')
+    if personio_cookie:
+        with open('.session', 'w') as file:
+            file.write(personio_cookie)
+            print("Refreshed session cookie stored successfully")
     try:
         message = f"Error: {attendanceDate} - {data['error']['message']}"
     except KeyError:

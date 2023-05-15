@@ -11,7 +11,8 @@ This tool lets you automatically track working time to your personio Attendance 
 
 The only configuration required in order to get started is to create a .env file with your preferred authentication (`PERSONIO_COOKIE` or `PERSONIO_USERNAME` & `PERSONIO_PASSWORD` ). 
 
-If authenticating with Cookie, Trackonio will try to refresh the cookie in order to keep the session alive.
+If authenticating with Cookie, Trackonio will try to refresh the cookie in order to keep the session alive. For this reason, by default it will wait for 1 minute to execute, making sure next iteration will happen before 24h since last request.
+This won't represent any issue in automated deployments, but if you want to manually track an entry, make sure to include the `-f`/`--fast` parameter for a faster execution.
 
 Therefore, the minimal configuration can be as easy as:
 ```
@@ -50,7 +51,7 @@ $ docker-compose up -d
 If you want to create manual entries for a specific reason (such as having worked extra time a specific day), the solution can also be called Ad-Hoc.
 In order to use it, you just have to call it with the desired date like in the example below:
 ```
-$ docker exec -it trackonio python trackonio.py 2023-05-21
+$ docker exec -it trackonio python trackonio.py 2023-05-21 -f
 ```
 
 ## Built With

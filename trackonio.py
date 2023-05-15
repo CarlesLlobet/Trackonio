@@ -8,6 +8,7 @@ import uuid
 import functools
 from datetime import datetime, timedelta
 from random import randint
+import time
 
 import requests
 
@@ -82,13 +83,16 @@ if __name__ == "__main__":
         print(
             f"""
             Error. No argument or wrong date format\n\n
-            Usage: {__file__} [date]\n
+            Usage: {__file__} <date> [-f/--fast]\n
             Note: Date format yyyy-mm-dd \n
             """
         )
         exit()
 
     attendanceDate = sys.argv[1]
+    fastExec = "--slow"
+    if len(sys.argv) == 3:
+        fastExec = sys.argv[2]
     
     # Create request session
     session = requests.Session()
@@ -102,6 +106,9 @@ if __name__ == "__main__":
             session.cookies.set('personio_session', COOKIE)
         print("Authenticating with following Cookie: " + str(session.cookies.get('personio_session')))
         response = session.get(MAIN_URL)
+        # Waiting 1 minute to make sure the returned cookie will be valid in next iteration
+        if fastExec != "-f" and fastExec != "--fast":
+            time.sleep(60)
     elif EMAIL != 'None' and PASSWORD != 'None':
         print("Authenticating with Username/Password: " + EMAIL)
         response = session.post(

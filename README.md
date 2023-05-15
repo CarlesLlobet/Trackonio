@@ -11,6 +11,8 @@ This tool lets you automatically track working time to your personio Attendance 
 
 The only configuration required in order to get started is to create a .env file with your preferred authentication (`PERSONIO_COOKIE` or `PERSONIO_USERNAME` & `PERSONIO_PASSWORD` ). 
 
+If authenticating with Cookie, Trackonio will try to refresh the cookie in order to keep the session alive.
+
 Therefore, the minimal configuration can be as easy as:
 ```
 $ echo "PERSONIO_COOKIE=eyJpdiI6IkY1TGFieUJUeHc..." > .env

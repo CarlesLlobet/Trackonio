@@ -20,6 +20,8 @@ CALENDAR_ID = str(os.environ.get('CALENDAR_ID', '59097'))
 STARTING_HOUR = str(os.environ.get('WORK_START_TIME', '08'))
 BREAK_HOUR = str(os.environ.get('BREAK_START_TIME', '13'))
 WORKING_HOURS = int(os.environ.get('WORK_DURATION', 8))
+WORK_SATURDAY = bool(os.environ.get('WORK_SATURDAY', False))
+WORK_SUNDAY = bool(os.environ.get('WORK_SUNDAY', False))
 BREAK_TIME_MINUTES = int(os.environ.get('BREAK_DURATION', 60))
 RANDOM_TIMES_DELTA = int(os.environ.get('RANDOM_TIMES_DELTA', 0))
 RANDOM_DURATIONS_DELTA = int(os.environ.get('RANDOM_TIMES_DELTA', 0))
@@ -127,7 +129,7 @@ if __name__ == "__main__":
         print("No auth method provided. Please RTFM!")
         exit()
     
-    # Check Working Day
+    # Check User Holiday
     response = session.get(
         f'{HOLIDAYS_URL}{CALENDAR_ID}&start_date={attendanceDate}&end_date={attendanceDate}'
     )
@@ -142,9 +144,16 @@ if __name__ == "__main__":
         f'{ABSENCES_URL}/{PROFILE_ID}/absences/periods?filter[startDate]={attendanceDate}&filter[endDate]={attendanceDate}&filter[absenceTypes]={absenceTypes}'
     )
     isAbsence = len(json.loads(response.text)['data'])
+    
+    # Check Working Day or Weekend
+    weekday = datetime.strptime(attendanceDate, "%Y-%m-%d").weekday()
+    isWeekendLeave = (not WORK_SATURDAY and weekday == 5) or (not WORK_SUNDAY and weekday == 6)
 
-    if isHoliday or isAbsence:
-        message = 'Not working day'
+    if isHoliday or isAbsence or isWeekendLeave:
+        if isHoliday: excuse = " You're on Leave"
+        if isAbsence: excuse = " It's Holiday"
+        if isWeekendLeave: excuse = "It's weekend"
+        message = 'Not working day: ' + excuse
         print(message)
         exit()
 

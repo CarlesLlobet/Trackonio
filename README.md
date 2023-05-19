@@ -33,6 +33,8 @@ Here are the different variables you can modify:
 > - `CALENDAR_ID`: Personio Public Holidays Calendar assigned to your office (_e.g: #Barcelona:59097 & Madrid:8868_)
 > - `WORK_START_TIME`: Time you want to track as start of work, in 24h format [00-23]. Double digit with 0 padding if neccessary! (_e.g: 08_)
 > - `WORK_DURATION`: Work duration in hours (_e.g: 8_)
+> - `WORK_SATURDAY`: Whether you work on Saturdays and want Saturday to be tracked
+> - `WORK_SUNDAY`: Whether you work on Sundays and want Sunday to be tracked
 > - `BREAK_START_TIME`: Time you want to track as start of your break, in 24h format [00-23]. Double digit with 0 padding if neccessary! (_e.g: 13_)
 > - `BREAK_DURATION`: Work duration in minutes (_e.g: 60_)
 > - `RANDOM_TIMES_DELTA`: Number of random +/- minutes of start time (_e.g: 5_)

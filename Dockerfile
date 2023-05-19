@@ -12,7 +12,7 @@ COPY trackonio.py .
 ARG CRON_HOUR
 ARG CRON_MINUTE
 
-RUN echo "${CRON_MINUTE:-0} ${CRON_HOUR:-9} * * 1-5 /usr/local/bin/python /app/trackonio.py $(date +%Y-%m-%d) >> /var/log/cron.log 2>&1" > /etc/cron.d/script-cron
+RUN echo "${CRON_MINUTE:-0} ${CRON_HOUR:-9} * * * /usr/local/bin/python /app/trackonio.py $(date +%Y-%m-%d) >> /var/log/cron.log 2>&1" > /etc/cron.d/script-cron
 RUN touch /var/log/cron.log
 RUN chmod 0644 /etc/cron.d/script-cron
 RUN crontab /etc/cron.d/script-cron

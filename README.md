@@ -54,6 +54,15 @@ In order to use it, you just have to call it with the desired date like in the e
 $ docker exec -it trackonio python trackonio.py 2023-05-21 -f
 ```
 
+If you want to track a whole period of time, you may also execute something like below:
+```
+$ export d=2023-05-01
+$ export endDate=2023-06-01
+$ while [ "$(date -d "$d" +%Y%m%d)" -lt "$(date -d "$endDate" +%Y%m%d)" ]; do docker exec -it trackonio python trackonio.py $d -f; d=$(date -I -d "$d + 1 day"); done
+```
+
+This example would track all May 2023 (from 1st day to 31st day).
+
 ## Built With
 
 * [Python](https://www.python.org/) - The programming language that lets you work quickly and integrate systems more effectively.

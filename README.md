@@ -2,6 +2,8 @@
 
 This tool lets you automatically track working time to your personio Attendance table.
 
+<a href="https://www.buymeacoffee.com/carlesllobet" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" height="41" width="174"></a>
+
 ## Requirements
 - [Docker](https://docs.docker.com/get-docker/)
 - [Docker Compose](https://docs.docker.com/get-started/08_using_compose/#install-docker-compose)

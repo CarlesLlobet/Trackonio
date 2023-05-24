@@ -20,8 +20,8 @@ services:
       - CALENDAR_ID=${CALENDAR_ID:-59097} #Barcelona:59097 & Madrid:8868
       - WORK_START_TIME=${WORK_START_TIME:-08} # 24h format [00-23]. Double digit with 0 padding if neccessary!
       - WORK_DURATION=${WORK_DURATION:-8} # In Hours
-      - WORK_SATURDAY=${WORK_SATURDAY:False}
-      - WORK_SUNDAY=${WORK_SUNDAY:False}
+      - WORK_SATURDAY=${WORK_SATURDAY:-False}
+      - WORK_SUNDAY=${WORK_SUNDAY:-False}
       - BREAK_START_TIME=${BREAK_START_TIME:-13} # 24h format [00-23]. Double digit with 0 padding if neccessary!
       - BREAK_DURATION=${BREAK_DURATION:-60} # In Minutes
       - RANDOM_TIMES_DELTA=${RANDOM_TIMES_DELTA:-0} # Number of random +/- minutes of start time

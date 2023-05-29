@@ -18,7 +18,7 @@ This won't represent any issue in automated deployments, but if you want to manu
 
 Therefore, the minimal configuration can be as easy as:
 ```
-$ echo "PERSONIO_COOKIE=eyJpdiI6IkY1TGFieUJUeHc..." > .env
+echo "PERSONIO_COOKIE=eyJpdiI6IkY1TGFieUJUeHc..." > .env
 ```
 
 The default configuration will assume you work for personio.personio.de and create everyday at 9:00 AM a track record of that day, with two entries without randomization:
@@ -44,11 +44,38 @@ Here are the different variables you can modify:
 
 ### Usage
 
+#### One-Time tracking
+If you don't want to use the solution automatic attendance and rather only track once manually, you can simply execute:
+```
+docker run -it --name trackonio -e PERSONIO_COOKIE='eyJpdiI...' krowone9/trackonio python trackonio.py 2023-05-24 -f; docker rm trackonio
+```
+
+And add any configuration variables from above you need as environment variables with the flag `-e`.
+
+If you want to track a whole period of time, you may also execute something like below:
+```
+export d=2023-05-01
+export endDate=2023-06-01
+export cookie='eyJpdiI...'
+while [ "$(date -d "$d" +%Y%m%d)" -lt "$(date -d "$endDate" +%Y%m%d)" ]; do docker run -it --name trackonio -e PERSONIO_COOKIE=$cookie krowone9/trackonio python trackonio.py $d -f; docker rm trackonio; d=$(date -I -d "$d + 1 day"); done
+```
+
+This example would track all May 2023 (from 1st day to 31st day).
+
+*Note: In Mac OSX, date does not allow parameter -d. In order to fix so, substitute the `date` command for `gdate` like below:*
+```
+brew install coreutils
+export d=2023-05-01
+export endDate=2023-06-01
+export cookie='eyJpdiI...'
+while [ "$(gdate -d "$d" +%Y%m%d)" -lt "$(gdate -d "$endDate" +%Y%m%d)" ]; do docker run -it --name trackonio -e PERSONIO_COOKIE=$cookie krowone9/trackonio python trackonio.py $d -f; docker rm trackonio; d=$(gdate -I -d "$d + 1 day"); done
+```
+
 #### Automatic tracking
-To start using this solution after configuring it at your disguise, you just have to execute:
+To start using the whole power (automatic tracking) of this solution after configuring it at your disguise, you just have to execute:
 
 ```
-$ docker-compose up -d
+docker-compose up -d
 ```
 
 Since the hour at which the time entry will be created depends on a cronjob, it has to be configured at image build time.
@@ -56,17 +83,18 @@ Therefore, if you want to configure a different time (`9:00 AM` by default), you
 The build format is commented within the docker-compose file, so just uncomment those lines and remove/comment the image one.
 
 #### Manual tracking
-If you want to create manual entries for a specific reason (such as having worked extra time a specific day), the solution can also be called Ad-Hoc.
-In order to use it, you just have to call it with the desired date like in the example below:
+If you already have your container in place, but you need to create manual entries for a specific reason (such as having worked extra time a specific day), the solution can also be called Ad-Hoc.
+To do so, you just have to call it with the desired date like in the example below:
+
 ```
-$ docker exec -it trackonio python trackonio.py 2023-05-21 -f
+docker exec -it trackonio python trackonio.py 2023-05-21 -f
 ```
 
 If you want to track a whole period of time, you may also execute something like below:
 ```
-$ export d=2023-05-01
-$ export endDate=2023-06-01
-$ while [ "$(date -d "$d" +%Y%m%d)" -lt "$(date -d "$endDate" +%Y%m%d)" ]; do docker exec -it trackonio python trackonio.py $d -f; d=$(date -I -d "$d + 1 day"); done
+export d=2023-05-01
+export endDate=2023-06-01
+while [ "$(date -d "$d" +%Y%m%d)" -lt "$(date -d "$endDate" +%Y%m%d)" ]; do docker exec -it trackonio python trackonio.py $d -f; d=$(date -I -d "$d + 1 day"); done
 ```
 
 This example would track all May 2023 (from 1st day to 31st day).

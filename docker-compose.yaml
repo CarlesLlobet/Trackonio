@@ -3,11 +3,12 @@ version: "3"
 services:
   trackonio:
     container_name: trackonio
-    build: 
-      context: .
-      args:
-        CRON_HOUR: ${CRON_HOUR:-9}
-        CRON_MINUTE: ${CRON_MINUTE:-0}
+    image: krowone9/trackonio
+    #build: 
+    #  context: .
+    #  args:
+    #    CRON_HOUR: ${CRON_HOUR:-9}
+    #    CRON_MINUTE: ${CRON_MINUTE:-0}
     restart: always
     volumes:
       - /etc/localtime:/etc/localtime:ro

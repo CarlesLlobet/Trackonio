@@ -51,6 +51,10 @@ To start using this solution after configuring it at your disguise, you just hav
 $ docker-compose up -d
 ```
 
+Since the hour at which the time entry will be created depends on a cronjob, it has to be configured at image build time.
+Therefore, if you want to configure a different time (`9:00 AM` by default), you should pull the whole github repository and build the image from there.
+The build format is commented within the docker-compose file, so just uncomment those lines and remove/comment the image one.
+
 #### Manual tracking
 If you want to create manual entries for a specific reason (such as having worked extra time a specific day), the solution can also be called Ad-Hoc.
 In order to use it, you just have to call it with the desired date like in the example below:

@@ -28,19 +28,19 @@ The default configuration will assume you work for personio.personio.de and crea
 However, you can configure many more variables through the .env file, and Trackonio will take care of the rest.
 Here are the different variables you can modify:
 
-> - `PERSONIO_HOST`: The host of your personio instance, usually companyname.personio.de (_e.g: acme.personio.de_)
-> - `PERSONIO_USERNAME`: Your Personio username (_e.g: name.surname<span>@</span>company.com_)
-> - `PERSONIO_PASSWORD`: Your Personio password (_e.g: mySuperStrongPassword!_)
-> - `PERSONIO_COOKIE`: Your Personio session cookie (_e.g: eyJpdiI6IkY1TGFieUJUeHc..._)
-> - `CALENDAR_ID`: Personio Public Holidays Calendar assigned to your office (_e.g: #Barcelona:59097 & Madrid:8868_)
-> - `WORK_START_TIME`: Time you want to track as start of work, in 24h format [00-23]. Double digit with 0 padding if neccessary! (_e.g: 08_)
-> - `WORK_DURATION`: Work duration in hours (_e.g: 8_)
-> - `WORK_SATURDAY`: Whether you work on Saturdays and want Saturday to be tracked
-> - `WORK_SUNDAY`: Whether you work on Sundays and want Sunday to be tracked
-> - `BREAK_START_TIME`: Time you want to track as start of your break, in 24h format [00-23]. Double digit with 0 padding if neccessary! (_e.g: 13_)
-> - `BREAK_DURATION`: Work duration in minutes (_e.g: 60_)
-> - `RANDOM_TIMES_DELTA`: Number of random +/- minutes of start time (_e.g: 5_)
-> - `RANDOM_DURATIONS_DELTA`: Number of random +/- minutes of durations (_e.g: 15_)
+- `PERSONIO_HOST`: The host of your personio instance, usually companyname.personio.de (_e.g: acme.personio.de_)
+- `PERSONIO_USERNAME`: Your Personio username (_e.g: name.surname<span>@</span>company.com_)
+- `PERSONIO_PASSWORD`: Your Personio password (_e.g: mySuperStrongPassword!_)
+- `PERSONIO_COOKIE`: Your Personio session cookie (_e.g: eyJpdiI6IkY1TGFieUJUeHc..._)
+- `CALENDAR_ID`: Personio Public Holidays Calendar assigned to your office (_e.g: #Barcelona:59097 & Madrid:8868_)
+- `WORK_START_TIME`: Time you want to track as start of work, in 24h format [00-23]. Double digit with 0 padding if neccessary! (_e.g: 08_)
+- `WORK_DURATION`: Work duration in hours (_e.g: 8_)
+- `WORK_SATURDAY`: Whether you work on Saturdays and want Saturday to be tracked
+- `WORK_SUNDAY`: Whether you work on Sundays and want Sunday to be tracked
+- `BREAK_START_TIME`: Time you want to track as start of your break, in 24h format [00-23]. Double digit with 0 padding if neccessary! (_e.g: 13_)
+- `BREAK_DURATION`: Work duration in minutes (_e.g: 60_)
+- `RANDOM_TIMES_DELTA`: Number of random +/- minutes of start time (_e.g: 5_)
+- `RANDOM_DURATIONS_DELTA`: Number of random +/- minutes of durations (_e.g: 15_)
 
 ### Usage
 

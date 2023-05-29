@@ -32,4 +32,4 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/trackonio:latest, ${{ secrets.DOCKERHUB_USERNAME }}/trackonio:$(date +%s)
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/trackonio:latest

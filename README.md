@@ -54,8 +54,7 @@ And add any configuration variables from above you need as environment variables
 
 If you want to track a whole period of time, you may also execute something like below:
 ```
-export d=2023-05-01
-export endDate=2023-06-01
+export d=2023-05-01 endDate=2023-06-01
 export cookie='eyJpdiI...'
 while [ "$(date -d "$d" +%Y%m%d)" -lt "$(date -d "$endDate" +%Y%m%d)" ]; do docker run -it --name trackonio -e PERSONIO_COOKIE=$cookie krowone9/trackonio python trackonio.py $d -f; docker rm trackonio; d=$(date -I -d "$d + 1 day"); done
 ```
@@ -65,8 +64,7 @@ This example would track all May 2023 (from 1st day to 31st day).
 *Note: In Mac OSX, date does not allow parameter -d. In order to fix so, substitute the `date` command for `gdate` like below:*
 ```
 brew install coreutils
-export d=2023-05-01
-export endDate=2023-06-01
+export d=2023-05-01 endDate=2023-06-01
 export cookie='eyJpdiI...'
 while [ "$(gdate -d "$d" +%Y%m%d)" -lt "$(gdate -d "$endDate" +%Y%m%d)" ]; do docker run -it --name trackonio -e PERSONIO_COOKIE=$cookie krowone9/trackonio python trackonio.py $d -f; docker rm trackonio; d=$(gdate -I -d "$d + 1 day"); done
 ```
@@ -92,8 +90,7 @@ docker exec -it trackonio python trackonio.py 2023-05-21 -f
 
 If you want to track a whole period of time, you may also execute something like below:
 ```
-export d=2023-05-01
-export endDate=2023-06-01
+export d=2023-05-01 endDate=2023-06-01
 while [ "$(date -d "$d" +%Y%m%d)" -lt "$(date -d "$endDate" +%Y%m%d)" ]; do docker exec -it trackonio python trackonio.py $d -f; d=$(date -I -d "$d + 1 day"); done
 ```
 

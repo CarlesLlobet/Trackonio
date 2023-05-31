@@ -50,34 +50,48 @@ def generate_attendance(
         workingDuration = randint(workingDuration - randomDurations, workingDuration + randomDurations)
         breakDuration = randint(breakDuration - randomDurations, breakDuration + randomDurations)
         
-    # Second Record
-    startTime2 = breakTime + timedelta(minutes=breakDuration)
+    if breakDuration == 0:
+        end_time = startTime + timedelta(minutes=workingDuration)
+        return [
+            {
+                "id": str(uuid.uuid1()),
+                "start": startTime.strftime("%Y-%m-%dT%H:%M:%SZ"),
+                "end": end_time.strftime("%Y-%m-%dT%H:%M:%SZ"),
+                "comment": "",
+                "project_id": None,
+                "employee_id": employeeId,
+                "activity_id": None,
+            },
+        ]
+    else:
+        # Second Record
+        startTime2 = breakTime + timedelta(minutes=breakDuration)
 
-    workingDuration2 = int(
-        workingDuration - (breakTime - startTime).total_seconds() / 60
-    )
-    end_time = startTime2 + timedelta(minutes=workingDuration2)
+        workingDuration2 = int(
+            workingDuration - (breakTime - startTime).total_seconds() / 60
+        )
+        end_time = startTime2 + timedelta(minutes=workingDuration2)
 
-    return [
-        {
-            "id": str(uuid.uuid1()),
-            "start": startTime.strftime("%Y-%m-%dT%H:%M:%SZ"),
-            "end": breakTime.strftime("%Y-%m-%dT%H:%M:%SZ"),
-            "comment": "",
-            "project_id": None,
-            "employee_id": employeeId,
-            "activity_id": None,
-        },
-        {
-            "id": str(uuid.uuid1()),
-            "start": startTime2.strftime("%Y-%m-%dT%H:%M:%SZ"),
-            "end": end_time.strftime("%Y-%m-%dT%H:%M:%SZ"),
-            "comment": "",
-            "project_id": None,
-            "employee_id": employeeId,
-            "activity_id": None,
-        },
-    ]
+        return [
+            {
+                "id": str(uuid.uuid1()),
+                "start": startTime.strftime("%Y-%m-%dT%H:%M:%SZ"),
+                "end": breakTime.strftime("%Y-%m-%dT%H:%M:%SZ"),
+                "comment": "",
+                "project_id": None,
+                "employee_id": employeeId,
+                "activity_id": None,
+            },
+            {
+                "id": str(uuid.uuid1()),
+                "start": startTime2.strftime("%Y-%m-%dT%H:%M:%SZ"),
+                "end": end_time.strftime("%Y-%m-%dT%H:%M:%SZ"),
+                "comment": "",
+                "project_id": None,
+                "employee_id": employeeId,
+                "activity_id": None,
+            },
+        ]
 
 
 if __name__ == "__main__":

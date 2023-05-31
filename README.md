@@ -38,7 +38,7 @@ Here are the different variables you can modify:
 - `WORK_SATURDAY`: Whether you work on Saturdays and want Saturday to be tracked
 - `WORK_SUNDAY`: Whether you work on Sundays and want Sunday to be tracked
 - `BREAK_START_TIME`: Time you want to track as start of your break, in 24h format [00-23]. Double digit with 0 padding if neccessary! (_e.g: 13_)
-- `BREAK_DURATION`: Work duration in minutes (_e.g: 60_)
+- `BREAK_DURATION`: Work duration in minutes, set to 0 if no break (_e.g: 60_)
 - `RANDOM_TIMES_DELTA`: Number of random +/- minutes of start time (_e.g: 5_)
 - `RANDOM_DURATIONS_DELTA`: Number of random +/- minutes of durations (_e.g: 15_)
 

@@ -22,8 +22,8 @@ echo "PERSONIO_COOKIE=eyJpdiI6IkY1TGFieUJUeHc..." > .env
 ```
 
 The default configuration will assume you work for personio.personio.de and create everyday at 9:00 AM a track record of that day, with two entries without randomization:
-* One from 8 to 13 (pre-break)
-* One from 14 to 17 (after-break)
+* One from 9 to 13 (pre-break)
+* One from 14 to 18 (after-break)
 
 However, you can configure many more variables through the .env file, and Trackonio will take care of the rest.
 Here are the different variables you can modify:
@@ -33,7 +33,7 @@ Here are the different variables you can modify:
 - `PERSONIO_PASSWORD`: Your Personio password (_e.g: mySuperStrongPassword!_)
 - `PERSONIO_COOKIE`: Your Personio session cookie (_e.g: eyJpdiI6IkY1TGFieUJUeHc..._)
 - `CALENDAR_ID`: Personio Public Holidays Calendar assigned to your office (_e.g: #Barcelona:59097 & Madrid:8868_)
-- `WORK_START_TIME`: Time you want to track as start of work, in 24h format [00-23]. Double digit with 0 padding if neccessary! (_e.g: 08_)
+- `WORK_START_TIME`: Time you want to track as start of work, in 24h format [00-23]. Double digit with 0 padding if neccessary! (_e.g: 09_)
 - `WORK_DURATION`: Work duration in hours (_e.g: 8_)
 - `WORK_SATURDAY`: Whether you work on Saturdays and want Saturday to be tracked
 - `WORK_SUNDAY`: Whether you work on Sundays and want Sunday to be tracked

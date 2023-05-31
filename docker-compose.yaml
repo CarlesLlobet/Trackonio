@@ -19,7 +19,7 @@ services:
       - PERSONIO_COOKIE=${PERSONIO_COOKIE}
       # TODO: Query Calendar ID when API v2 is released with this feature: https://developer.personio.de/discuss/61d860f5f3dd510347146908
       - CALENDAR_ID=${CALENDAR_ID:-59097} #Barcelona:59097 & Madrid:8868
-      - WORK_START_TIME=${WORK_START_TIME:-08} # 24h format [00-23]. Double digit with 0 padding if neccessary!
+      - WORK_START_TIME=${WORK_START_TIME:-09} # 24h format [00-23]. Double digit with 0 padding if neccessary!
       - WORK_DURATION=${WORK_DURATION:-8} # In Hours
       - WORK_SATURDAY=${WORK_SATURDAY:-False}
       - WORK_SUNDAY=${WORK_SUNDAY:-False}

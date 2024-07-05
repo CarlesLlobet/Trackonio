@@ -153,8 +153,7 @@ if __name__ == "__main__":
     response = session.get(
         f'{ABSENCES_URL}/{PROFILE_ID}/absences/types'
     )
-    absenceTypes = ','.join(list(map(lambda a : str(a['id']), json.loads(response.text)['data'])))
-    absenceTypes.remove("2352878") # Removing Personio's On-Call absence, if existing
+    absenceTypes = ','.join(list(map(lambda a : str(a['id']), json.loads(response.text)['data'])).remove("2352878")) # Removing Personio's On-Call absence, if existing
     response = session.get(
         f'{ABSENCES_URL}/{PROFILE_ID}/absences/periods?filter[startDate]={attendanceDate}&filter[endDate]={attendanceDate}&filter[absenceTypes]={absenceTypes}'
     )
